@@ -17,18 +17,37 @@ namespace WormHoleSharp
 		Hold = 3,
 		DeliverImmediately = 4
 	}
+
 	delegate void CFNotificationCallback (CFNotificationCenterRef center, IntPtr observer, IntPtr name, IntPtr obj, IntPtr userInfo);
-	public class CFNotificationCenter 
+	public class CFNotificationCenter  : INativeObject, IDisposable
 	{
-		public delegate void NotificationChangeEventHandler (object sender, string notification);
+		public class NoticationEventArgs : EventArgs
+		{
+			public NoticationEventArgs(string message)
+			{
+				Message = message;
+			}
+			public string Message {get;private set;}
+		}
+		#region INativeObject implementation
+
+		CFNotificationCenterRef handle;
+		public CFNotificationCenterRef Handle {
+			get {
+				return handle;
+			}
+		}
+
+		#endregion
+
+		public delegate void NotificationChangeEventHandler (object sender, NoticationEventArgs notification);
 
 		public event NotificationChangeEventHandler NotificationChanged;
 
-		CFNotificationCenterRef reference;
 
 		internal CFNotificationCenter (CFNotificationCenterRef reference)
 		{
-			this.reference = reference;
+			this.handle = reference;
 		}
 
 		static CFNotificationCenter darwinCenter;
@@ -48,14 +67,28 @@ namespace WormHoleSharp
 			}
 		}
 
+		public void Dispose ()
+		{
+			Dispose (true);
+			GC.SuppressFinalize (this);
+		}
+
+		protected virtual void Dispose (bool disposing)
+		{
+			if (handle != IntPtr.Zero) {
+				handle = IntPtr.Zero;
+			}
+			RemoveEveryObserver ();
+		}
+
 		static Dictionary<CFNotificationCenterRef,CFNotificationCenter> centers = new Dictionary<CFNotificationCenterRef,CFNotificationCenter> ();
 		int ObserverCount = 0;
 
 		public void AddObserver (string value, CFNotificationSuspensionBehavior suspensionBehavior = CFNotificationSuspensionBehavior.DeliverImmediately)
 		{
 			ObserverCount++;
-			centers [reference] = this;
-			AddObserver (reference, reference, NotificationCallback, new CFString (value).Handle, IntPtr.Zero, suspensionBehavior);
+			centers [handle] = this;
+			AddObserver (handle, handle, NotificationCallback, new CFString (value).Handle, IntPtr.Zero, suspensionBehavior);
 		}
 
 		void notification (CFString name, NSDictionary userInfo)
@@ -63,7 +96,7 @@ namespace WormHoleSharp
 			var evt = NotificationChanged;
 			if (evt == null)
 				return;
-			evt (this, name.ToString ());
+			evt (this,new NoticationEventArgs(name.ToString ()));
 		}
 
 		[ObjCRuntime.MonoPInvokeCallback (typeof(CFNotificationCallback))]
@@ -76,27 +109,27 @@ namespace WormHoleSharp
 
 		public void PostNotification(string notification)
 		{
-			PostNotification (reference, new CFString (notification).Handle, IntPtr.Zero, IntPtr.Zero, true);
+			PostNotification (handle, new CFString (notification).Handle, IntPtr.Zero, IntPtr.Zero, true);
 		}
 
 		public void RemoveNotificationObserver(string notification)
 		{
 			ObserverCount--;
-			RemoveObserver (reference, reference, NotificationCallback, new CFString (notification).Handle, IntPtr.Zero);
-			if (this.ObserverCount <= 0 && centers.ContainsKey(reference))
-				centers.Remove (reference);
+			RemoveObserver (handle, handle, NotificationCallback, new CFString (notification).Handle, IntPtr.Zero);
+			if (this.ObserverCount <= 0 && centers.ContainsKey(handle))
+				centers.Remove (handle);
 		}
 
 		public void RemoveEveryObserver()
 		{
 			ObserverCount = 0;
-			RemoveEveryObserver (reference, reference);
+			RemoveEveryObserver (handle, handle);
 			var evt = NotificationChanged.GetInvocationList ();
 			foreach (var e in evt)
 				NotificationChanged -= (NotificationChangeEventHandler)e;
 
-			if (centers.ContainsKey(reference))
-				centers.Remove (reference);
+			if (centers.ContainsKey(handle))
+				centers.Remove (handle);
 		}
 
 

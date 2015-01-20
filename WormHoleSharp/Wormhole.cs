@@ -119,9 +119,9 @@ namespace WormHoleSharp
 			CFNotificationCenter.DarwinCenter.RemoveNotificationObserver (identifier);
 		}
 
-		void wormholeNotificationCallback (object sender, string identifier)
+		void wormholeNotificationCallback (object sender, CFNotificationCenter.NoticationEventArgs message)
 		{
-			NSNotificationCenter.DefaultCenter.PostNotificationName (WormholeNotificationName, null, NSDictionary.FromObjectAndKey ((NSString)identifier, (NSString)"identifier"));
+			NSNotificationCenter.DefaultCenter.PostNotificationName (WormholeNotificationName, null, NSDictionary.FromObjectAndKey ((NSString)message.Message, (NSString)"identifier"));
 		}
 
 		void DidReceiveMessageNotification (NSNotification notification)
