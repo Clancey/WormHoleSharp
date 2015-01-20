@@ -16,8 +16,8 @@ It currently requires Json.Net for nice object serialization. Feel free to swap 
 ```c#
 wormHole.PassMessage ("ButtonMessage", new ButtonMessage{ Id =  1 });
 
-wormHole.ListenForMessage<string> ("watchButton", (message) => {
-		ButtonLabel.Text = message;
+wormHole.ListenForMessage<ButtonMessage> ("ButtonMessage", (message) => {
+		ButtonLabel.Text = ButtonMessage.Id.ToString();
 	});
 ```
 
@@ -47,7 +47,7 @@ Using Wormhole is extremely straightforward. The only real catch is that your ap
 
 Initialize Wormhole with your App Group identifier and an optional directory name
 
-```c-sharp
+```c#
 wormHole = new Wormhole ("group.com.clancey.wormhole", "messageDir");
 
 ```
@@ -56,7 +56,7 @@ wormHole = new Wormhole ("group.com.clancey.wormhole", "messageDir");
 
 Pass a message with an any jSon serializable object
 
-```c-sharp
+```c#
 wormHole.PassMessage ("ButtonMessage", new ButtonMessage{ Id =  1 });
 
 ```
@@ -65,13 +65,13 @@ wormHole.PassMessage ("ButtonMessage", new ButtonMessage{ Id =  1 });
 
 You have two options for reading a message. You can obtain the message for an identifier at any time by asking the wormhole for the message. 
 
-```c-sharp
+```c#
 var message = wormHole.MessageWithIdentifier<string> ("watchButton")
 ```
 
 You can also listen for changes to that message and be notified when that message is updated.
 
-```c-sharp
+```c#
 wormHole.ListenForMessage<string> ("watchButton", (message) => {
 				//Do something
 			});
@@ -85,7 +85,7 @@ You can think of message passing between apps and extensions sort of like a web 
 
 ## Requirements
 
-MMWormhole requires iOS 7.0 or higher.
+Wormhole requires iOS 7.0 or higher.
 
 
 ## Credits
