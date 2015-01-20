@@ -3,12 +3,12 @@ using Foundation;
 using System.IO;
 using System.Collections.Generic;
 
-namespace MMWormHoleSharp
+namespace WormHoleSharp
 {
-	public class MMWormhole : NSObject
+	public class Wormhole : NSObject
 	{
 		// #include <CoreFoundation/CoreFoundation.h>
-		const string MMWormholeNotificationName = "MMWormholeNotificationName";
+		const string WormholeNotificationName = "WormholeNotificationName";
 
 		public string ApplicationGroupIdentifier { get; set; }
 
@@ -17,13 +17,13 @@ namespace MMWormHoleSharp
 		public NSFileManager FileManager { get; set; }
 
 
-		public MMWormhole (string identifier, string directory)
+		public Wormhole (string identifier, string directory)
 		{
 
 			this.ApplicationGroupIdentifier = identifier;
 			this.Directory = directory;
 			this.FileManager = new NSFileManager ();
-			NSNotificationCenter.DefaultCenter.AddObserver ((NSString)MMWormholeNotificationName, DidReceiveMessageNotification);
+			NSNotificationCenter.DefaultCenter.AddObserver ((NSString)WormholeNotificationName, DidReceiveMessageNotification);
 			CFNotificationCenter.DarwinCenter.NotificationChanged += wormholeNotificationCallback;
 		
 
@@ -121,7 +121,7 @@ namespace MMWormHoleSharp
 
 		void wormholeNotificationCallback (object sender, string identifier)
 		{
-			NSNotificationCenter.DefaultCenter.PostNotificationName (MMWormholeNotificationName, null, NSDictionary.FromObjectAndKey ((NSString)identifier, (NSString)"identifier"));
+			NSNotificationCenter.DefaultCenter.PostNotificationName (WormholeNotificationName, null, NSDictionary.FromObjectAndKey ((NSString)identifier, (NSString)"identifier"));
 		}
 
 		void DidReceiveMessageNotification (NSNotification notification)

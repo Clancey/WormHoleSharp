@@ -4,16 +4,16 @@ using System;
 
 using UIKit;
 using Foundation;
-using MMWormHoleSharp;
+using WormHoleSharp;
 
 namespace SampleApp
 {
 	public partial class ViewController : UIViewController
 	{
-		MMWormhole wormHole;
+		Wormhole wormHole;
 		public ViewController (IntPtr handle) : base (handle)
 		{
-			wormHole = new MMWormhole ("group.com.clancey.wormhole", "messageDir");
+			wormHole = new Wormhole ("group.com.clancey.wormhole", "messageDir");
 			wormHole.ListenForMessage<string> ("watchButton", (message) => {
 				ButtonLabel.Text = message;
 			});

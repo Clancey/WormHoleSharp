@@ -2,7 +2,7 @@
 
 using WatchKit;
 using Foundation;
-using MMWormHoleSharp;
+using WormHoleSharp;
 
 namespace Sample.WatchExtension
 {
@@ -11,12 +11,12 @@ namespace Sample.WatchExtension
 		public InterfaceController (IntPtr handle) : base (handle)
 		{
 		}
-		MMWormhole wormHole;
+		Wormhole wormHole;
 		public override void Awake (NSObject context)
 		{
 			base.Awake (context);
 
-			wormHole = new MMWormhole ("group.com.clancey.wormhole", "messageDir");
+			wormHole = new Wormhole ("group.com.clancey.wormhole", "messageDir");
 			wormHole.ListenForMessage<ButtonMessage> (ButtonMessage.MessageType, (message) => {
 				SelectionLabel.SetText(message.Id.ToString());
 			});

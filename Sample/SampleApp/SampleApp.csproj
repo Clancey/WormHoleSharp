@@ -115,7 +115,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\MMWormHoleSharp\MMWormHoleSharp.csproj">
+    <ProjectReference Include="..\..\WormHoleSharp\WormHoleSharp.csproj">
       <Project>{B34F9D50-11B7-429E-8AE4-BC2AA61F1519}</Project>
       <Name>MMWormHoleSharp</Name>
     </ProjectReference>

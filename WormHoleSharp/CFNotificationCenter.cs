@@ -8,7 +8,7 @@ using CFNotificationCenterRef=global::System.IntPtr;
 using ObjCRuntime;
 
 
-namespace MMWormHoleSharp
+namespace WormHoleSharp
 {
 	public enum CFNotificationSuspensionBehavior
 	{
@@ -18,7 +18,7 @@ namespace MMWormHoleSharp
 		DeliverImmediately = 4
 	}
 	delegate void CFNotificationCallback (CFNotificationCenterRef center, IntPtr observer, IntPtr name, IntPtr obj, IntPtr userInfo);
-	public class CFNotificationCenter : NSObject
+	public class CFNotificationCenter 
 	{
 		public delegate void NotificationChangeEventHandler (object sender, string notification);
 
@@ -55,7 +55,7 @@ namespace MMWormHoleSharp
 		{
 			ObserverCount++;
 			centers [reference] = this;
-			AddObserver (reference, this.Handle, NotificationCallback, new CFString (value).Handle, IntPtr.Zero, suspensionBehavior);
+			AddObserver (reference, reference, NotificationCallback, new CFString (value).Handle, IntPtr.Zero, suspensionBehavior);
 		}
 
 		void notification (CFString name, NSDictionary userInfo)
@@ -82,7 +82,7 @@ namespace MMWormHoleSharp
 		public void RemoveNotificationObserver(string notification)
 		{
 			ObserverCount--;
-			RemoveObserver (reference, this.Handle, NotificationCallback, new CFString (notification).Handle, IntPtr.Zero);
+			RemoveObserver (reference, reference, NotificationCallback, new CFString (notification).Handle, IntPtr.Zero);
 			if (this.ObserverCount <= 0 && centers.ContainsKey(reference))
 				centers.Remove (reference);
 		}
@@ -90,7 +90,7 @@ namespace MMWormHoleSharp
 		public void RemoveEveryObserver()
 		{
 			ObserverCount = 0;
-			RemoveEveryObserver (reference, this.Handle);
+			RemoveEveryObserver (reference, reference);
 			var evt = NotificationChanged.GetInvocationList ();
 			foreach (var e in evt)
 				NotificationChanged -= (NotificationChangeEventHandler)e;

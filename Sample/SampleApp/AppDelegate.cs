@@ -4,7 +4,7 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
-using MMWormHoleSharp;
+using WormHoleSharp;
 using System.Threading.Tasks;
 
 namespace SampleApp
