@@ -88,7 +88,16 @@ namespace WormHoleSharp
 		{
 			ObserverCount++;
 			centers [handle] = this;
-			AddObserver (handle, handle, NotificationCallback, new CFString (value).Handle, IntPtr.Zero, suspensionBehavior);
+			var strHandle = value == null ? IntPtr.Zero : NSString.CreateNative (value);
+			AddObserver (center: handle,
+				observer: handle,
+				callback: NotificationCallback,
+				name: strHandle,
+				obj: IntPtr.Zero,
+				suspensionBehavior: suspensionBehavior);
+			if (value != null)
+				NSString.ReleaseNative (strHandle);
+
 		}
 
 		void notification (CFString name, NSDictionary userInfo)
@@ -109,14 +118,18 @@ namespace WormHoleSharp
 
 		public void PostNotification(string notification)
 		{
-			PostNotification (handle, new CFString (notification).Handle, IntPtr.Zero, IntPtr.Zero, true);
+			var strHandle = NSString.CreateNative (notification);
+			PostNotification (handle, strHandle, IntPtr.Zero, IntPtr.Zero, true);
+			NSString.ReleaseNative (strHandle);
 		}
 
 		public void RemoveNotificationObserver(string notification)
 		{
 			ObserverCount--;
-			RemoveObserver (handle, handle, NotificationCallback, new CFString (notification).Handle, IntPtr.Zero);
-			if (this.ObserverCount <= 0 && centers.ContainsKey(handle))
+			var strHandle = NSString.CreateNative (notification);
+			RemoveObserver (handle, this.Handle, NotificationCallback, new CFString (notification).Handle, IntPtr.Zero);
+			NSString.ReleaseNative (strHandle);
+			if (ObserverCount <= 0 && centers.ContainsKey(handle))
 				centers.Remove (handle);
 		}
 
