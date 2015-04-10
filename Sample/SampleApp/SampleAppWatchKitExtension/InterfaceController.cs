@@ -4,7 +4,7 @@ using WatchKit;
 using Foundation;
 using WormHoleSharp;
 
-namespace Sample.WatchExtension
+namespace SampleAppWatchKitExtension
 {
 	public partial class InterfaceController : WKInterfaceController
 	{

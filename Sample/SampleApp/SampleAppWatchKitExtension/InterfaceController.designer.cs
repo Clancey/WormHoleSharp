@@ -6,7 +6,7 @@
 
 using Foundation;
 
-namespace Sample.WatchExtension
+namespace SampleAppWatchKitExtension
 {
 	[Register ("InterfaceController")]
 	partial class InterfaceController

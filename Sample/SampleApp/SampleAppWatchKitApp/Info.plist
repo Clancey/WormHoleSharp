@@ -2,32 +2,28 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleDisplayName</key>
+	<string>SampleAppWatchKitApp</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.clancey.Sample.watchkitapp</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>CFBundleDisplayName</key>
-	<string>Sample.WatchApp</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.clancey.Sample.WatchApp</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>com.your-company.Sample.WatchApp</string>
-	<key>CFBundlePackageType</key>
-	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>MinimumOSVersion</key>
+	<string>8.2</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>WKCompanionAppBundleIdentifier</key>
-	<string>com.your-company.Sample.WatchApp</string>
+	<string>com.clancey.Sample</string>
 	<key>WKWatchKitApp</key>
 	<true/>
+	<key>XSAppIconAssets</key>
+	<string>Resources/Images.xcassets/AppIcons.appiconset</string>
 </dict>
 </plist>

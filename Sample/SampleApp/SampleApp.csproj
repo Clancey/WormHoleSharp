@@ -21,9 +21,13 @@
     <ConsolePause>false</ConsolePause>
     <MtouchArch>i386</MtouchArch>
     <MtouchLink>None</MtouchLink>
-    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchDebug>true</MtouchDebug>
     <MtouchProfiling>true</MtouchProfiling>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchUseRefCounting>true</MtouchUseRefCounting>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchI18n>
+    </MtouchI18n>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -117,11 +121,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\WormHoleSharp\WormHoleSharp.csproj">
       <Project>{B34F9D50-11B7-429E-8AE4-BC2AA61F1519}</Project>
-      <Name>MMWormHoleSharp</Name>
+      <Name>WormHoleSharp</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sample.WatchExtension\Sample.WatchExtension.csproj">
-      <Project>{3E54A5EA-D609-456D-9649-2F4502E6FDC8}</Project>
-      <Name>Sample.WatchExtension</Name>
+    <ProjectReference Include="SampleAppWatchKitExtension\SampleAppWatchKitExtension.csproj">
+      <Project>{164240F0-AB54-452B-9BBE-C384D86AC7AE}</Project>
+      <Name>SampleAppWatchKitExtension</Name>
       <IsAppExtension>True</IsAppExtension>
     </ProjectReference>
   </ItemGroup>
