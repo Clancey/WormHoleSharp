@@ -39,6 +39,8 @@ namespace WormHoleSharp
 		string MessagePassingDirectoryPath ()
 		{
 			var appGroupContainer = FileManager.GetContainerUrl (ApplicationGroupIdentifier);
+			if (appGroupContainer == null)
+				throw new Exception ("App groups are not properly setup. Make sure you added the app group to the entitlements");
 			string appGroupContainerPath = appGroupContainer.Path;
 			string directoryPath = appGroupContainerPath;
 			if (this.Directory != null) {
