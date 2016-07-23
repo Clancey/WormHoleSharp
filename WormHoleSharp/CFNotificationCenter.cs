@@ -127,7 +127,7 @@ namespace WormHoleSharp
 		{
 			ObserverCount--;
 			var strHandle = NSString.CreateNative (notification);
-			RemoveObserver (handle, this.Handle, NotificationCallback, new CFString (notification).Handle, IntPtr.Zero);
+			RemoveObserver (handle, this.Handle, new CFString (notification).Handle, IntPtr.Zero);
 			NSString.ReleaseNative (strHandle);
 			if (ObserverCount <= 0 && centers.ContainsKey(handle))
 				centers.Remove (handle);
@@ -159,7 +159,7 @@ namespace WormHoleSharp
 		static extern unsafe void PostNotification (CFNotificationCenterRef center,IntPtr name,  IntPtr obj, IntPtr userInfo, bool deliverImmediately);
 
 		[DllImport ("__Internal", CharSet = CharSet.Auto, EntryPoint = "CFNotificationCenterRemoveObserver")]
-		static extern unsafe void RemoveObserver (CFNotificationCenterRef center, IntPtr observer, CFNotificationCallback callback, IntPtr name, IntPtr obj);
+		static extern unsafe void RemoveObserver (CFNotificationCenterRef center, IntPtr observer, IntPtr name, IntPtr obj);
 
 
 		[DllImport ("__Internal", CharSet = CharSet.Auto, EntryPoint = "CFNotificationCenterRemoveEveryObserver")]
